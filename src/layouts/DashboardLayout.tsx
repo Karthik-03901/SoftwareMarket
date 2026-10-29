@@ -13,7 +13,6 @@ import {
 } from 'lucide-react'
 import { useAuthStore } from '@/stores/useAuthStore'
 import Avatar from '@/components/ui/Avatar'
-import Badge from '@/components/ui/Badge'
 
 const DashboardLayout = () => {
   const location = useLocation()

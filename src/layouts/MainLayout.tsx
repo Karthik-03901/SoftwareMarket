@@ -1,9 +1,8 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom'
-import { Menu, X, Search, ShoppingCart, User, LogOut, LayoutDashboard } from 'lucide-react'
+import { Menu, X, Search, User, LogOut, LayoutDashboard } from 'lucide-react'
 import { useState } from 'react'
 import Button from '@/components/ui/Button'
 import Avatar from '@/components/ui/Avatar'
-import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 const MainLayout = () => {

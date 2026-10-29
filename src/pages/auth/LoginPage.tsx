@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import Card from '@/components/ui/Card'
-import { authAPI } from '@/lib/api'
+import { authService } from '@/lib/auth'
 import { useAuthStore } from '@/stores/useAuthStore'
 
 const loginSchema = z.object({
@@ -23,7 +23,6 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
-  const { setAuth } = useAuthStore()
 
   const {
     register,
@@ -36,10 +35,23 @@ const LoginPage = () => {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true)
     try {
-      const response = await authAPI.login(data.email, data.password)
-      const { user, token, refreshToken } = response.data
+      const result = await authService.signIn(data.email, data.password)
 
-      setAuth(user, token, refreshToken)
+      if (!result.success) {
+        toast.error('Login failed', {
+          description: result.error || 'Invalid email or password',
+        })
+        return
+      }
+
+      const user = useAuthStore.getState().user
+      if (!user) {
+        toast.error('Login failed', {
+          description: 'User data not found',
+        })
+        return
+      }
+
       toast.success('Login successful!', {
         description: `Welcome back, ${user.name}!`,
       })
@@ -50,7 +62,7 @@ const LoginPage = () => {
       else navigate('/buyer/dashboard')
     } catch (error: any) {
       toast.error('Login failed', {
-        description: error.response?.data?.message || 'Invalid email or password',
+        description: error.message || 'An error occurred',
       })
     } finally {
       setIsLoading(false)
@@ -121,7 +133,7 @@ const LoginPage = () => {
                 <span className="text-sm text-muted-foreground">Remember me</span>
               </label>
               <Link
-                to="/forgot-password"
+                to="/auth/forgot-password"
                 className="text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors"
               >
                 Forgot password?

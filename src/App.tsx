@@ -11,6 +11,10 @@ import MarketplacePage from '@/pages/MarketplacePage'
 import ProductDetailPage from '@/pages/ProductDetailPage'
 import LoginPage from '@/pages/auth/LoginPage'
 import RegisterPage from '@/pages/auth/RegisterPage'
+import ForgotPasswordPage from '@/pages/auth/ForgotPasswordPage'
+import ResetPasswordPage from '@/pages/auth/ResetPasswordPage'
+import VerifyEmailPage from '@/pages/auth/VerifyEmailPage'
+import TestSupabasePage from '@/pages/TestSupabasePage'
 
 // Buyer Pages
 import BuyerDashboard from '@/pages/buyer/BuyerDashboard'
@@ -39,11 +43,15 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/marketplace" element={<MarketplacePage />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
+            <Route path="/test-supabase" element={<TestSupabasePage />} />
           </Route>
 
           {/* Auth Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/auth/verify-email" element={<VerifyEmailPage />} />
 
           {/* Buyer Protected Routes */}
           <Route element={<ProtectedRoute role="BUYER" />}>

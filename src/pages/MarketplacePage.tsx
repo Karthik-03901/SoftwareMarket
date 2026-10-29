@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react'
-import { Filter, Grid, List, Search, SlidersHorizontal, Star, TrendingUp } from 'lucide-react'
+import { Filter, Grid, List, Search, SlidersHorizontal, Star } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import Input from '@/components/ui/Input'
 import Select from '@/components/ui/Select'
-import { SkeletonCard } from '@/components/ui/Skeleton'
 import Avatar from '@/components/ui/Avatar'
 import { formatCurrency } from '@/lib/utils'
 
@@ -132,7 +131,6 @@ const MarketplacePage = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState('all')
   const [sortBy, setSortBy] = useState('popular')
   const [filteredProducts, setFilteredProducts] = useState(mockProducts)
-  const [loading, setLoading] = useState(false)
   const [showFilters, setShowFilters] = useState(false)
 
   // Filter products based on search and filters
@@ -344,13 +342,7 @@ const MarketplacePage = () => {
             </div>
 
             {/* Products Grid */}
-            {loading ? (
-              <div className={`grid ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'} gap-6`}>
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <SkeletonCard key={i} />
-                ))}
-              </div>
-            ) : filteredProducts.length === 0 ? (
+            {filteredProducts.length === 0 ? (
               <Card variant="glass" className="text-center py-16">
                 <div className="text-6xl mb-4">🔍</div>
                 <h3 className="text-2xl font-bold text-foreground mb-2">No products found</h3>
